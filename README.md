@@ -7,7 +7,7 @@ An Intelligent Candidate Ranking System built for the Redrob Hackathon. This pip
 To run the ranking pipeline and generate the final submission CSV, simply run the main Python script:
 
 ```bash
-python submission/main.py
+python submission/main.py --candidates ./candidates.jsonl --out ./submission.csv
 ```
 
 ### Prerequisites

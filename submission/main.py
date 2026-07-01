@@ -509,11 +509,23 @@ def run_rrf_combination(candidates_list: list[dict], k: int = 60) -> pd.DataFram
 # =============================================================================
 
 def main() -> None:
+    import argparse
+    parser = argparse.ArgumentParser(description="Candidate Ranking Pipeline")
+    parser.add_argument("--candidates", type=str, help="Path to candidates.jsonl file", default=None)
+    parser.add_argument("--out", type=str, help="Path to output CSV file", default=None)
+    args = parser.parse_args()
+
     print("=" * 64)
     print("Method 3 -- RRF + Dynamic Reasoning + Timeline Honeypot Filter")
     print("=" * 64)
 
-    candidates_path = _find_candidates_file()
+    if args.candidates:
+        candidates_path = Path(args.candidates)
+        print(f"[DATA] Using provided candidates file: {candidates_path}")
+    else:
+        candidates_path = _find_candidates_file()
+        
+    out_file = Path(args.out) if args.out else OUT_FILE
 
     passing_candidates: list[dict] = []
     stats = {"read": 0, "dropped": 0, "queued": 0}
@@ -557,8 +569,8 @@ def main() -> None:
     print(f"  RRF Ranked   : {stats['queued']:,}")
     print(f"  Elapsed      : {elapsed:.2f}s")
 
-    top_100_df.to_csv(OUT_FILE, index=False)
-    print(f"\n[DONE] Written 100 rows to {OUT_FILE}")
+    top_100_df.to_csv(out_file, index=False)
+    print(f"\n[DONE] Written 100 rows to {out_file}")
 
 
 if __name__ == "__main__":

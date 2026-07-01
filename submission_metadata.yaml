@@ -1,0 +1,73 @@
+
+# ============================================================================
+# Team identity
+# ============================================================================
+team_name: "Lavanya Bhadani"  # Used in leaderboard and announcements
+
+primary_contact:
+  name: "Lavanya Bhadani"
+  email: "lavi.bhadani@gmail.com"   # Used for all organizer communication
+  phone: "+91-7358480256"        # Used for top-50 / top-10 outreach
+
+team_members:
+  - name: "Lavanya Bhadani"
+    email: "lavi.bhadani@gmail.com"
+    role: "ML Engineer, Full Stack Developer"          # Optional, e.g. "Team Lead", "Backend", "Data"
+# ============================================================================
+# Code and reproducibility
+# ============================================================================
+github_repo: "https://github.com/lavanya-22-glitch/Redorb_Lavanya_Bhadani"
+# Required. Must be reachable. Private repos OK if you can grant organizer
+# access at Stage 3 (the email to add will be communicated then).
+
+sandbox_link: "https://huggingface.co/spaces/lavanya-22/redorb_lavanya_bhadani"
+# Required. A working hosted environment where the ranker can be run on a small
+# candidate sample. See Section 10.5 of submission_spec.md for acceptable
+# platforms (HuggingFace Spaces, Streamlit Cloud, Replit, Colab, Docker, Binder).
+
+reproduce_command: "python submission/main.py --candidates ./candidates.jsonl --out ./submission.csv"
+# The single command that produces submission.csv from candidates.jsonl.
+# Should run end-to-end within 5 minutes on CPU with 16GB RAM and no network.
+
+# ============================================================================
+# Compute environment
+# ============================================================================
+compute:
+  platform: "Windows 11 (Local PC)"             # Or: "AWS EC2 c5.4xlarge", "Local Linux box", etc.
+  cpu_cores: 4                                  # Number of CPU cores used
+  ram_gb: 8                                    # Available RAM in GB
+  python_version: "3.10.x"                      # python --version
+  os: "Windows 11"                              # Or "Ubuntu 22.04 LTS", etc.
+  uses_gpu_for_inference: false                 # Must be false — see compute constraints
+  has_network_during_ranking: false             # Must be false — no API calls during ranking
+  pre_computation_required: false               # true if you pre-compute embeddings or train models offline
+  pre_computation_time_minutes: 0               # Approximate, if applicable
+
+# ============================================================================
+# AI tools declaration
+# ============================================================================
+# Transparency only — declared use is NOT penalized. Be honest. Stage 5 interview
+# may verify these declarations against your code; declarations that contradict
+# your code or your interview are flagged.
+ai_tools_used:
+  - "Gemini"        # e.g. for architecture discussion, code review
+  # Other options: "ChatGPT", "Cursor", "Gemini", "Codeium", "Other", "None"
+
+ai_usage_summary: |
+  "Used Gemini as a pair-programmer to design the RRF ranking system, help construct the dynamic reasoning logic, and build the live Gradio sandbox. All logic remains purely deterministic with no LLM calls during candidate processing."
+
+# ============================================================================
+# Approach summary (optional but recommended)
+# ============================================================================
+methodology_summary: |
+  A robust 6-Layer deterministic ranking pipeline utilizing Reciprocal Rank Fusion (RRF) and dynamic reasoning generation. Layer 0 drops honeypots via a curated company timeline dictionary (Traps A & B). Layers 1 and 2 independently calculate Lexical Scores (Vector DBs, Eval Metrics, Ranking Systems) and Tabular Scores (YoE, Location, Notice Period, GitHub activity). Layer 3 fuses these disparate dimensions using RRF to completely eliminate arbitrary scaling/weighting sensitivity. Layer 4 applies soft penalties for job-hopping and excessive framework wrappers. Finally, Layer 5 dynamically synthesizes a unique, fact-backed justification string per candidate to prevent manual review penalization for static template usage. Total runtime is ~15 seconds for 100K candidates.
+
+# ============================================================================
+# Declarations
+# ============================================================================
+declarations:
+  read_submission_spec: true        # I have read submission_spec.md in full
+  code_is_original_work: true       # My code is my team's original work (using AI as a tool is fine)
+  no_collusion: true                # I have not coordinated my submission with other teams
+  honeypot_check_done: true         # OPTIONAL — set true if you explicitly checked for honeypots in your ranking
+  reproduction_tested: true         # I have tested that my reproduce_command runs end-to-end

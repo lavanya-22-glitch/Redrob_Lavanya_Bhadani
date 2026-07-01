@@ -40,51 +40,59 @@ def run_pipeline(sample_input):
     return df, out_path
 
 # Define a sleek, premium Lavender & Black theme
-custom_theme = gr.themes.Base(
+custom_theme = gr.themes.Soft(
+    primary_hue="purple",
+    neutral_hue="slate",
     font=[gr.themes.GoogleFont('Inter'), 'ui-sans-serif', 'system-ui', 'sans-serif'],
 ).set(
-    # Pure black backgrounds
+    # Dark backgrounds
     body_background_fill="#000000",
     body_background_fill_dark="#000000",
-    background_fill_primary="#121212",
-    background_fill_primary_dark="#121212",
-    background_fill_secondary="#000000",
-    background_fill_secondary_dark="#000000",
+    background_fill_primary="#0a0a0a",
+    background_fill_primary_dark="#0a0a0a",
+    background_fill_secondary="#111111",
+    background_fill_secondary_dark="#111111",
+    block_background_fill="#0a0a0a",
+    block_background_fill_dark="#0a0a0a",
+    input_background_fill="#111111",
+    input_background_fill_dark="#111111",
     
-    # Text colors
-    body_text_color="#E0E0E0",
-    body_text_color_dark="#E0E0E0",
+    # Text colors (Forced to white/light gray so they don't vanish!)
+    body_text_color="#f3f4f6",
+    body_text_color_dark="#f3f4f6",
+    block_title_text_color="#f3f4f6",
+    block_title_text_color_dark="#f3f4f6",
+    block_label_text_color="#c4b5fd", # Lavender labels
+    block_label_text_color_dark="#c4b5fd",
+    input_text_color="#ffffff",
+    input_text_color_dark="#ffffff",
     
-    # Borders
-    border_color_primary="#2D2D2D",
-    border_color_primary_dark="#2D2D2D",
-    border_color_accent="#B392F0",      # Lavender accent
-    color_accent_soft="#B392F0",        # Lavender accent
+    # Lavender Accents
+    color_accent_soft="#8b5cf6",
+    color_accent_soft_dark="#8b5cf6",
+    border_color_primary="#2d2d2d",
+    border_color_primary_dark="#2d2d2d",
+    border_color_accent="#8b5cf6",
+    border_color_accent_dark="#8b5cf6",
     
-    # Primary Buttons (Lavender)
-    button_primary_background_fill="#B392F0",
-    button_primary_background_fill_dark="#B392F0",
-    button_primary_text_color="#000000",
-    button_primary_text_color_dark="#000000",
-    button_primary_background_fill_hover="#9B72E6",
-    button_primary_background_fill_hover_dark="#9B72E6",
+    # Primary Buttons
+    button_primary_background_fill="#8b5cf6",
+    button_primary_background_fill_dark="#8b5cf6",
+    button_primary_text_color="#ffffff",
+    button_primary_text_color_dark="#ffffff",
+    button_primary_background_fill_hover="#7c3aed",
+    button_primary_background_fill_hover_dark="#7c3aed",
     
     # Secondary Buttons
-    button_secondary_background_fill="#1E1E1E",
-    button_secondary_background_fill_dark="#1E1E1E",
-    button_secondary_text_color="#E0E0E0",
-    button_secondary_text_color_dark="#E0E0E0",
-    
-    # Inputs & Blocks
-    input_background_fill="#121212",
-    input_background_fill_dark="#121212",
-    block_background_fill="#121212",
-    block_background_fill_dark="#121212",
+    button_secondary_background_fill="#1f2937",
+    button_secondary_background_fill_dark="#1f2937",
+    button_secondary_text_color="#ffffff",
+    button_secondary_text_color_dark="#ffffff",
 )
 
 demo = gr.Interface(
     fn=run_pipeline,
-    inputs=gr.Textbox(lines=5, label="Paste Candidate JSON Data Stream"),
+    inputs=gr.Textbox(lines=10, label="Paste Candidate JSON Data Stream", placeholder="[ { 'candidate_id': ... } ]"),
     outputs=[
         gr.Dataframe(label="Top Shortlisted Output (Ranked via RRF Matrix)"),
         gr.File(label="Download Submission CSV")
