@@ -1,17 +1,43 @@
 import gradio as gr
 import pandas as pd
-# Import your extraction layers here
 import os
+import json
+from rules import evaluate_hard_filters
+from main import check_company_timeline_honeypot, run_rrf_combination
 
 def run_pipeline(sample_input):
-    # Since running 100,000 candidates takes memory, we load the pre-computed final output!
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    csv_path = os.path.join(current_dir, "team_Lavanya_Bhadani.csv")
+    # 1. Parse the pasted JSON data
+    if not sample_input or not sample_input.strip():
+        return pd.DataFrame({"Error": ["Please paste some JSON data first!"]}), None
     
-    if os.path.exists(csv_path):
-        return pd.read_csv(csv_path), csv_path
-    else:
-        return pd.DataFrame({"Error": ["Could not find the final CSV file on the server!"]}), None
+    try:
+        candidates = json.loads(sample_input)
+    except Exception as e:
+        return pd.DataFrame({"Error": [f"Invalid JSON: {e}"]}), None
+        
+    if not isinstance(candidates, list):
+        candidates = [candidates] # handle single object pastes
+        
+    # 2. Run Layer 0 (Filtration Gate)
+    passing_candidates = []
+    for c in candidates:
+        if not evaluate_hard_filters(c).passed:
+            continue
+        if not check_company_timeline_honeypot(c):
+            continue
+        passing_candidates.append(c)
+        
+    if not passing_candidates:
+        return pd.DataFrame({"Error": ["All pasted candidates were dropped by the Hard Filters!"]}), None
+        
+    # 3 & 4 & 5. Run Scoring, RRF Matrix, and Narrative Synthesis
+    df = run_rrf_combination(passing_candidates, k=60)
+    
+    # 6. Save live result to a temporary CSV for the download button
+    out_path = "live_sandbox_output.csv"
+    df.to_csv(out_path, index=False)
+    
+    return df, out_path
 
 # Define a sleek, premium Lavender & Black theme
 custom_theme = gr.themes.Base(
