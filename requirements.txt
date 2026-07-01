@@ -1,5 +1,0 @@
-# Redrob Intelligent Candidate Ranker
-# Python dependencies
-
-# Core — no ML inference; fully CPU-bound, no network calls
-pytest>=7.4
