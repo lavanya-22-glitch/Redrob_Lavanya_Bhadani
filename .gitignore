@@ -72,3 +72,4 @@ venv.bak/
 Thumbs.db
 
 info/
+candidates.jsonl

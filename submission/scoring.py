@@ -25,7 +25,7 @@ import logging
 from dataclasses import dataclass, field
 from typing import Any
 
-from src.config import (
+from config import (
     # Positive scoring
     AI_CORE_SKILLS,
     EDUCATION_TIER_SCORES,

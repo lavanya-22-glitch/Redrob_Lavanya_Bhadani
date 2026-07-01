@@ -17,7 +17,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
-from src.config import (
+from config import (
     BANNED_CONSULTING_FIRMS,
     HONEYPOT_TOLERANCE_MONTHS,
     INVALID_TRACK_KEYWORDS,
