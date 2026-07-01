@@ -14,6 +14,7 @@ python submission/main.py
 The script uses standard Python libraries but requires `pandas` for efficient data-frame ranking operations:
 ```bash
 pip install pandas
+pip install gradio
 ```
 
 ## 🧠 Methodology & Pipeline Layers
