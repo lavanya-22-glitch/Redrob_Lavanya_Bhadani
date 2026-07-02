@@ -1,4 +1,4 @@
-# Redorb Candidate Ranker — Lavanya Bhadani
+# redrob Candidate Ranker — Lavanya Bhadani
 
 An Intelligent Candidate Ranking System built for the Redrob Hackathon. This pipeline processes candidates and outputs a highly refined, ranked shortlist of 100 top candidates by combining lexical history checks, tabular data scoring, and Reciprocal Rank Fusion (RRF).
 
